@@ -1,1 +1,2 @@
 - [ ] Enhance link identifier generation - Should use bigger namespace [0-9a-Z]
+- [ ] Give user the shortest currently possible identifier (keep long identifier too)
