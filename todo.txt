@@ -1,0 +1,1 @@
+- [ ] Enhance link identifier generation - Should use bigger namespace [0-9a-Z]
