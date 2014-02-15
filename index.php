@@ -31,12 +31,12 @@ if(!empty($_GET['url'])) {
 	$findfiles	= glob($hashfilepath . '*');
 
 	if(empty($findfiles)) {
-		$content .= 'No files.';
+		$content = 'No files.';
 		return 1;
 	} else if (count($findfiles) > 1) {
 		foreach($findfiles as $file) {
 			$file = str_replace('/', '', substr($file, 5));
-			$content .= '<a href="./?'.$file.'">./?'.$file.'</a><br />';
+			$content = '<a href="./?'.$file.'">./?'.$file.'</a><br />';
 		}
 	}
 
