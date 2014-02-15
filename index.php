@@ -15,7 +15,7 @@ if(!empty($_GET['url'])) {
 	$hashfolderpath	= './db/' . $hashfolder;
 	$hashfilepath	= $hashfolderpath . '/' . $hashfile;
 
-	mkdir($hashfolderpath, 0775, true);
+	mkdir($hashfolderpath, 0700, true);
 
 	file_put_contents($hashfilepath, $url);
 	echo '<a href="./?'.$urlhash.'">./?'.$urlhash.'</a><br />';
