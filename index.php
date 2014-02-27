@@ -1,5 +1,4 @@
 <?php
-
 if(!empty($_GET['url'])) {
 	$url		= $_GET['url'];
 
@@ -15,12 +14,11 @@ if(!empty($_GET['url'])) {
 	$hashfolderpath	= './db/' . $hashfolder;
 	$hashfilepath	= $hashfolderpath . '/' . $hashfile;
 
-	mkdir($hashfolderpath, 0775, true);
+	mkdir($hashfolderpath, 0700, true);
 
 	file_put_contents($hashfilepath, $url);
-	echo '<a href="./?'.$urlhash.'">./?'.$urlhash.'</a><br />';
-	echo 'As long as there is not collision you can shorten it up to 3 characters.';
-	return 0;
+	$content = '<a href="./?'.$urlhash.'">./?'.$urlhash.'</a><br />
+			As long as there is not collision, you can shorten it down to 3 characters.';
 } else if(!empty($_GET)) {
 	$urlhash = key($_GET);
 
@@ -33,21 +31,36 @@ if(!empty($_GET['url'])) {
 	$findfiles	= glob($hashfilepath . '*');
 
 	if(empty($findfiles)) {
-		echo 'No files.';
+		$content = 'No files.';
 		return 1;
 	} else if (count($findfiles) > 1) {
 		foreach($findfiles as $file) {
 			$file = str_replace('/', '', substr($file, 5));
-			echo '<a href="./?'.$file.'">./?'.$file.'</a><br />';
+			$content = '<a href="./?'.$file.'">./?'.$file.'</a><br />';
 		}
-		return 1;
 	}
 
 	$fullfilepath = current($findfiles);
 
 	header('Location:' . file_get_contents($fullfilepath));
 	return 0;
+} else {
+	$content = '<form method="get">
+				Enter your URL: <input type="text" name="url"><input type="submit" value="Submit">
+			</form>';
 }
 
-echo './?url=&lt;url&gt;';
-return 0;
+//actual page below
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Shuri</title>
+	</head>
+	<body>
+		<div id="content">
+			<?php echo $content ?>
+
+		</div>
+	</body>
+</html>
