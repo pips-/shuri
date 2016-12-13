@@ -1,4 +1,12 @@
 <?php
+
+function smallHash($text)
+{
+    $t = rtrim(base64_encode(hash('crc32', $text, true)), '=');
+
+    return strtr($t, '+/', '-_');
+}
+
 if (!empty($_GET['url'])) {
     $url = $_GET['url'];
 
@@ -6,7 +14,7 @@ if (!empty($_GET['url'])) {
         $url = 'http://'.$url;
     }
 
-    $urlhash = sha1($url);
+    $urlhash = smallHash($url);
 
     $hashfolder = substr($urlhash, 0, 2);
     $hashfile = substr($urlhash, 2);
@@ -17,8 +25,7 @@ if (!empty($_GET['url'])) {
     mkdir($hashfolderpath, 0700, true);
 
     file_put_contents($hashfilepath, $url);
-    $content = '<a href="./?'.$urlhash.'">./?'.$urlhash.'</a><br />
-			As long as there is not collision, you can shorten it down to 3 characters.';
+    $content = '<a href="./?'.$urlhash.'">./?'.$urlhash.'</a>';
 } elseif (!empty($_GET)) {
     $urlhash = key($_GET);
 
@@ -34,11 +41,6 @@ if (!empty($_GET['url'])) {
         $content = 'No files.';
 
         return 1;
-    } elseif (count($findfiles) > 1) {
-        foreach ($findfiles as $file) {
-            $file = str_replace('/', '', substr($file, 5));
-            $content = '<a href="./?'.$file.'">./?'.$file.'</a><br />';
-        }
     }
 
     $fullfilepath = current($findfiles);
