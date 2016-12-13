@@ -37,17 +37,14 @@ if (!empty($_GET['url'])) {
 
     $findfiles = glob($hashfilepath);
 
-    if (empty($findfiles)) {
-        $content = 'No files.';
+    if (!empty($findfiles)) {
+        $fullfilepath = current($findfiles);
 
-        return 1;
+        header('Location:'.file_get_contents($fullfilepath));
+        return 0;
     }
 
-    $fullfilepath = current($findfiles);
-
-    header('Location:'.file_get_contents($fullfilepath));
-
-    return 0;
+    $content = 'No link match this identifier.';
 } else {
     $content = '<form method="get">
 				Enter your URL: <input type="text" name="url"><input type="submit" value="Submit">
