@@ -25,7 +25,7 @@ if (!empty($_GET['url'])) {
     mkdir($hashfolderpath, 0700, true);
 
     file_put_contents($hashfilepath, $url);
-    $content = '<a href="./?'.$urlhash.'">./?'.$urlhash.'</a>';
+    $content = '<a href="./?'.$urlhash.'">http://'.$_SERVER['HTTP_HOST'].'/?'.$urlhash.'</a>';
 } elseif (!empty($_GET)) {
     $urlhash = key($_GET);
 
