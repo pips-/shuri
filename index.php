@@ -63,8 +63,7 @@ if (!empty($_GET['url'])) {
 	</head>
 	<body>
 		<div id="content">
-			<?php echo $content ?>
-
+			<?= $content ?>
 		</div>
 	</body>
 </html>
