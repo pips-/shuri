@@ -35,7 +35,7 @@ if (!empty($_GET['url'])) {
     $hashfolderpath = './db/'.$hashfolder;
     $hashfilepath = $hashfolderpath.'/'.$hashfile;
 
-    $findfiles = glob($hashfilepath.'*');
+    $findfiles = glob($hashfilepath);
 
     if (empty($findfiles)) {
         $content = 'No files.';
