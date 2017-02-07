@@ -30,11 +30,11 @@ if (!empty($_GET['url'])) {
 
     file_put_contents($hashfilepath, $url);
 
-    $shortUrl = 'http://'.$_SERVER['HTTP_HOST'].'/'.$_SERVER['SCRIPT_NAME'].'?'.$urlhash;
+    $shortUrl = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'?'.$urlhash;
 
     $qrcode = (new QrCode())->setText($shortUrl);
 
-    $content = '<a href="'.$shortUrl.'">'.$shortUrl.'</a>'
+    $content = '<a href="'.$shortUrl.'">'.$shortUrl.'</a><br>'
 	    .'<img src="data:'.$qrcode->getContentType().';base64,'.base64_encode($qrcode->get()).'">';
 } elseif (!empty($_GET)) {
     $urlhash = key($_GET);
