@@ -1,5 +1,9 @@
 <?php
 
+require __DIR__.'/vendor/autoload.php';
+
+use Endroid\QrCode\QrCode;
+
 function smallHash($text)
 {
     $t = rtrim(base64_encode(hash('crc32', $text, true)), '=');
@@ -28,7 +32,10 @@ if (!empty($_GET['url'])) {
 
     $shortUrl = 'http://'.$_SERVER['HTTP_HOST'].'/'.$_SERVER['SCRIPT_NAME'].'?'.$urlhash;
 
-    $content = '<a href="'.$shortUrl.'">'.$shortUrl.'</a>';
+    $qrcode = (new QrCode())->setText($shortUrl);
+
+    $content = '<a href="'.$shortUrl.'">'.$shortUrl.'</a>'
+	    .'<img src="data:'.$qrcode->getContentType().';base64,'.base64_encode($qrcode->get()).'">';
 } elseif (!empty($_GET)) {
     $urlhash = key($_GET);
 
