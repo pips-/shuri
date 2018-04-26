@@ -32,9 +32,15 @@ if (!empty($_GET['url'])) {
 
     $shortUrl = $_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'?'.$urlhash;
 
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+        $shortUrl = 'https://'.$shortUrl;
+    } else {
+        $shortUrl = 'http://'.$shortUrl;
+    }
+
     $qrcode = (new QrCode())->setText($shortUrl);
 
-    $content = '<a href="//'.$shortUrl.'">'.$shortUrl.'</a><br>'
+    $content = '<a href="'.$shortUrl.'">'.$shortUrl.'</a><br>'
 	    .'<img src="data:'.$qrcode->getContentType().';base64,'.base64_encode($qrcode->get()).'">';
 } elseif (!empty($_GET)) {
     $urlhash = key($_GET);
