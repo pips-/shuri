@@ -30,7 +30,13 @@ if (!empty($_GET['url'])) {
 
     file_put_contents($hashfilepath, $url);
 
-    $shortUrl = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'?'.$urlhash;
+    $shortUrl = $_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'?'.$urlhash;
+
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+        $shortUrl = 'https://'.$shortUrl;
+    } else {
+        $shortUrl = 'http://'.$shortUrl;
+    }
 
     $qrcode = (new QrCode())->setText($shortUrl);
 
